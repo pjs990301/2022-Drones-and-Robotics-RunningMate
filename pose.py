@@ -9,8 +9,10 @@ import cv2
 protoFile = "models/pose/mpi/pose_deploy_linevec_faster_4_stages.prototxt"
 weightsFile = "models/pose/mpi/pose_iter_160000.caffemodel"
 
-video_path = 'pose_input/input_10_15_2.mp4'
-out_path = 'pose_output/out_10_15.avi'
+video_path = 'pose_input/11_6/11_6.mp4'
+out_path = 'pose_output/video/11_6/11_6.avi'
+csv_path = 'pose_output/csv/11_6/11_6.csv'
+
 
 # Load the model and the weights
 net = cv2.dnn.readNetFromCaffe(protoFile, weightsFile)
@@ -31,7 +33,7 @@ inWidth = 368
 # Define the output
 output = cv2.VideoWriter(out_path, 0, fps, (w, h))
 
-fourcc = cv2.VideoWriter_fourcc(*'MPEG')
+fourcc = cv2.VideoWriter_fourcc(*'DIVX')
 writer = None
 (f_h, f_w) = (h, w)
 zeros = None
@@ -116,6 +118,9 @@ while True:
     key = cv2.waitKey(1) & 0xFF
     if key == ord("q"):
         break
+df = pd.DataFrame(data)
+df.to_csv(csv_path, index = False)
+print('save complete')
 
 pbar.finish()
 cap.release()
