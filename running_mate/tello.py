@@ -12,8 +12,8 @@ import pose_clear
 
 keepRecording = True
 recorder = 0
-
-
+path_name = ""
+file_name = ""
 def initTello():
     myDrone = Tello()
 
@@ -33,7 +33,7 @@ def initTello():
     return myDrone
 
 
-def videoRecorder(path_name, file_name):
+def videoRecorder():
     path = "../pose_input/" + path_name + "/" + file_name + ".avi"
     height, width, _ = frame_read.frame.shape
     video = cv2.VideoWriter(path, cv2.VideoWriter_fourcc(*'DIVX'), 30, (width, height))
@@ -49,7 +49,8 @@ if __name__ == "__main__":
     now = datetime.now()
     path_name = now.strftime('%Y-%m-%d')  # 2021-12-22
     file_name = now.strftime('%Y-%m-%d-%H:%M:%S')  # 2021-12-22-15:46:26
-
+    print(path_name)
+    print(file_name)
     myDrone = initTello()
     myDrone.takeoff()
     time.sleep(1)
@@ -81,7 +82,7 @@ if __name__ == "__main__":
             myDrone.move_right(20)
         if keyboard == ord('v'):
             if recorder == 0:
-                recorder = Thread(target=videoRecorder(path_name, file_name))
+                recorder = Thread(target=videoRecorder)
                 recorder.start()
 
     # video_path = '../pose_input/2022-11-05/11_5.mov'
