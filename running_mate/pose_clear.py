@@ -9,9 +9,9 @@ def clear_pose(video_path, clear_out_path, csv_path):
     circle_color, line_color = (0, 255, 255), (0, 255, 0)
     window_length, polyorder = 11, 2
 
-    # video_path = 'pose_input/11_5/11_5.mov'
-    # out_path = 'pose_output/clear_video/11_5/11_5.mp4'
-    # csv_path = 'pose_output/csv/11_5/11_5.csv'
+    # video_path = 'pose_input/2022-11-05/2022-11-05.mov'
+    # out_path = 'pose_output/clear_video/2022-11-05/2022-11-05.mp4'
+    # csv_path = 'pose_output/csv/2022-11-05/2022-11-05.csv'
 
     video_path = video_path
     out_path = clear_out_path
