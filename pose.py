@@ -9,9 +9,9 @@ import cv2
 protoFile = "models/pose/mpi/pose_deploy_linevec_faster_4_stages.prototxt"
 weightsFile = "models/pose/mpi/pose_iter_160000.caffemodel"
 
-video_path = 'pose_input/11_6/11_6.mp4'
-out_path = 'pose_output/video/11_6/11_6.avi'
-csv_path = 'pose_output/csv/11_6/11_6.csv'
+video_path = 'pose_input/11_5/11_5.mov'
+out_path = 'pose_output/video/11_5/11_5.avi'
+csv_path = 'pose_output/csv/11_5/11_5.csv'
 
 
 # Load the model and the weights
