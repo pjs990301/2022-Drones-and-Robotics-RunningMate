@@ -101,6 +101,7 @@ if __name__ == "__main__":
     print(file_name)
     myDrone = initTello()
     myDrone.takeoff()
+    myDrone.move_up(70)
     time.sleep(1)
     myDrone.streamon()
     cv2.namedWindow("drone")
@@ -122,24 +123,24 @@ if __name__ == "__main__":
             for face_encoding in face_encodings:
                 matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
                 print(str(matches) + " " + str(matches[0]) + " " + str(matches[1]))
-                name = "Unknown"
+                # name = "Unknown"
 
-                face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
-                best_match_index = np.argmin(face_distances)
-                if matches[best_match_index]:
-                    name = known_face_names[best_match_index]
-
-                face_names.append(name)
-
-                if (str(matches[0]) == True & str(matches[1]) == True):
+                if (matches[0] == True & matches[1] == True):
                     myDrone.flip_right()
+                    process_this_frame = not process_this_frame
                     break
                 else:
                     myDrone.flip_left()
 
-        process_this_frame = not process_this_frame
+                # face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
+                # best_match_index = np.argmin(face_distances)
+                # if matches[best_match_index]:
+                #     name = known_face_names[best_match_index]
+                #
+                # face_names.append(name)
 
         # Todo : 이 부분에서 찍기 위한 드론의 위치로 옮기기
+
         keyboard = cv2.waitKey(1) & 0xFF
 
         if keyboard == ord('q'):
@@ -151,16 +152,22 @@ if __name__ == "__main__":
 
         if keyboard == ord('w'):
             myDrone.move_forward(20)
+
         if keyboard == ord('s'):
             myDrone.move_back(20)
+
         if keyboard == ord('a'):
             myDrone.move_left(20)
+
         if keyboard == ord('d'):
             myDrone.move_right(20)
+
         if keyboard == ord('g'):
             myDrone.move_up(10)
+
         if keyboard == ord('h'):
             myDrone.move_down(10)
+
         if keyboard == ord('v'):
             if recorder == 0:
                 recorder = Thread(target=videoRecorder)
