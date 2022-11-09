@@ -6,39 +6,41 @@ video_capture = cv2.VideoCapture(0)
 
 # Load a sample picture and learn how to recognize it.
 pyo_1 = face_recognition.load_image_file("face_data/pyo_1.jpg")
-# pyo_2 = face_recognition.load_image_file("face_data/pyo_2.jpg")
+pyo_2 = face_recognition.load_image_file("face_data/pyo_2.jpg")
 # pyo_3 = face_recognition.load_image_file("face_data/pyo_3.jpg")
 # pyo_4 = face_recognition.load_image_file("face_data/pyo_4.jpg")
 # han_1 = face_recognition.load_image_file("face_data/han_1.jpg")
 # han_2 = face_recognition.load_image_file("face_data/han_2.jpg")
 han_3 = face_recognition.load_image_file("face_data/han_3.jpg")
+han_4 = face_recognition.load_image_file("face_data/han_4.jpg")
 
 pyo_face_encoding_1 = face_recognition.face_encodings(pyo_1)[0]
-# pyo_face_encoding_2 = face_recognition.face_encodings(pyo_2)[0]
+pyo_face_encoding_2 = face_recognition.face_encodings(pyo_2)[0]
 # pyo_face_encoding_3 = face_recognition.face_encodings(pyo_3)[0]
 # pyo_face_encoding_4 = face_recognition.face_encodings(pyo_4)[0]
 
 # han_face_encoding_1 = face_recognition.face_encodings(han_1)[0]
 # han_face_encoding_2 = face_recognition.face_encodings(han_2)[0]
 han_face_encoding_3 = face_recognition.face_encodings(han_3)[0]
-
+han_face_encoding_4 = face_recognition.face_encodings(han_4)[0]
 
 # Create arrays of known face encodings and their names
 known_face_encodings = [
     pyo_face_encoding_1,
-    # pyo_face_encoding_2,
+    pyo_face_encoding_2,
     # pyo_face_encoding_3,
     # pyo_face_encoding_4
-    han_face_encoding_3
+    han_face_encoding_3,
+    han_face_encoding_4
 ]
 known_face_names = [
     "pyo ji sung",
+    "pyo ji sung",
     # "pyo ji sung",
     # "pyo ji sung",
-    # "pyo ji sung",
+    # "han sung goo"
+    "han sung goo",
     "han sung goo"
-    # "han sung goo"
-    # "han sung goo"
 ]
 
 # Initialize some variables
@@ -67,6 +69,7 @@ while True:
         for face_encoding in face_encodings:
             # See if the face is a match for the known face(s)
             matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+            print(str(matches) + " " + str(matches[0]) + " " + str(matches[1]))
             name = "Unknown"
 
             # # If a match was found in known_face_encodings, just use the first one.

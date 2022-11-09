@@ -10,10 +10,25 @@ from datetime import datetime
 import pose
 import pose_clear
 
+import face_recognition
+import cv2
+import numpy as np
+
 keepRecording = True
 recorder = 0
 path_name = ""
 file_name = ""
+
+han1 = None
+han2 = None
+han_face_encoding_1 = None
+han_face_encoding_2 = None
+known_face_encodings = None
+known_face_names = None
+face_locations = []
+face_encodings = []
+face_names = []
+process_this_frame = True
 
 
 def initTello():
@@ -52,6 +67,24 @@ if __name__ == "__main__":
     path_name = now.strftime('%Y-%m-%d')  # 2021-12-22
     file_name = now.strftime('%Y-%m-%d-%H-%M-%S')  # 2021-12-22-15-46-26
 
+    han_1 = face_recognition.load_image_file(
+        "/Users/pyojisung/Documents/GitHub/2022-Drones-and-Robotics-RunningMate/face_data/han_3.jpg")
+
+    han_2 = face_recognition.load_image_file(
+        "/Users/pyojisung/Documents/GitHub/2022-Drones-and-Robotics-RunningMate/face_data/han_4.jpg")
+
+    han_face_encoding_1 = face_recognition.face_encodings(han_1)[0]
+    han_face_encoding_2 = face_recognition.face_encodings(han_2)[0]
+
+    known_face_encodings = [
+        han_face_encoding_1,
+        han_face_encoding_2
+    ]
+    known_face_names = [
+        "han sung goo",
+        "han sung goo"
+    ]
+
     # video_path = '../pose_input/2022-11-05/11_5.mov'
     video_path = '../pose_input/' + path_name + "/" + file_name + ".avi"
 
@@ -78,6 +111,35 @@ if __name__ == "__main__":
         img = frame_read.frame
         cv2.imshow("drone", img)
 
+        if process_this_frame:
+            small_frame = cv2.resize(img, (0, 0), fx=0.25, fy=0.25)
+            rgb_small_frame = small_frame[:, :, ::-1]
+            face_locations = face_recognition.face_locations(rgb_small_frame)
+            face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
+
+            face_names = []
+
+            for face_encoding in face_encodings:
+                matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+                print(str(matches) + " " + str(matches[0]) + " " + str(matches[1]))
+                name = "Unknown"
+
+                face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
+                best_match_index = np.argmin(face_distances)
+                if matches[best_match_index]:
+                    name = known_face_names[best_match_index]
+
+                face_names.append(name)
+
+                if (str(matches[0]) == True & str(matches[1]) == True):
+                    myDrone.flip_right()
+                    break
+                else:
+                    myDrone.flip_left()
+
+        process_this_frame = not process_this_frame
+
+        # Todo : 이 부분에서 찍기 위한 드론의 위치로 옮기기
         keyboard = cv2.waitKey(1) & 0xFF
 
         if keyboard == ord('q'):
@@ -86,6 +148,7 @@ if __name__ == "__main__":
             myDrone.streamoff()
             keepRecording = False
             break
+
         if keyboard == ord('w'):
             myDrone.move_forward(20)
         if keyboard == ord('s'):
