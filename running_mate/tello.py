@@ -127,9 +127,13 @@ if __name__ == "__main__":
 
                 if (matches[0] == True & matches[1] == True):
                     myDrone.flip_right()
+                    # myDrone.flip_left()
+                    ##myDrone.move_right(20)
+                    #3myDrone.move_left(20)
                     process_this_frame = not process_this_frame
                     break
                 else:
+                    # myDrone.flip_right()
                     myDrone.flip_left()
 
                 # face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
@@ -142,6 +146,7 @@ if __name__ == "__main__":
         # Todo : 이 부분에서 찍기 위한 드론의 위치로 옮기기
 
         keyboard = cv2.waitKey(1) & 0xFF
+        # Todo : land하고 녹화가 정지되는 데 녹화 정지하고 land 되면 좋겠음
 
         if keyboard == ord('q'):
             myDrone.land()
