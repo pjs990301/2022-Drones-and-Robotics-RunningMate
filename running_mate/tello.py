@@ -122,18 +122,12 @@ if __name__ == "__main__":
 
             for face_encoding in face_encodings:
                 matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
-                print(str(matches) + " " + str(matches[0]) + " " + str(matches[1]))
-                # name = "Unknown"
 
                 if (matches[0] == True & matches[1] == True):
                     myDrone.flip_right()
-                    # myDrone.flip_left()
-                    ##myDrone.move_right(20)
-                    #3myDrone.move_left(20)
                     process_this_frame = not process_this_frame
                     break
                 else:
-                    # myDrone.flip_right()
                     myDrone.flip_left()
 
                 # face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
