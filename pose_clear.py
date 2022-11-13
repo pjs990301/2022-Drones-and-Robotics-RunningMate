@@ -39,9 +39,11 @@ now = datetime.now()
 file_name = now.strftime('%Y-%m-%d-%H-%M-%S')  # 2021-12-22-15-46-26
 
 # video_path = 'pose_input/2022-11-06.mp4'
-video_path = 'pose_input/2022-11-10/2022-11-10-19-58-41.mp4'
-out_path = 'pose_output/clear_video/2022-11-10/2022-11-10-19-58-41.mp4'
-csv_path = 'pose_output/csv/2022-11-10/2022-11-10-19-58-41.csv'
+
+video_path = 'pose_input/2022-11-14/2022-11-14-00-20-15.mp4'
+out_path = 'pose_output/clear_video/2022-11-14/2022-11-14-00-20-15.mp4'
+csv_path = 'pose_output/csv/2022-11-14/2022-11-14-00-20-15.csv'
+
 
 df = pd.read_csv(csv_path)
 
@@ -211,7 +213,7 @@ while True:
             point14 = (xy[0], xy[1])
 
     # print(angle(point12[0], point12[1], point11[0], point11[1], point13[0], point13[1]))
-    img_path = 'pose_output/img/' + "2022-11-10" + "/" + file_name + "-" + str(frame_number) + ".jpg"
+    img_path = 'pose_output/img/' + "2022-11-14" + "/" + file_name + "-" + str(frame_number) + ".jpg"
 
     # fontColor
     blue = (255, 0, 0)

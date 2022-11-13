@@ -122,9 +122,12 @@ if __name__ == "__main__":
 
             for face_encoding in face_encodings:
                 matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+                print(str(matches) + " " + str(matches[0]) + " " + str(matches[1]))
 
                 if (matches[0] == True & matches[1] == True):
                     myDrone.flip_right()
+                    # myDrone.move_left(20)
+                    # myDrone.move_right(10)
                     process_this_frame = not process_this_frame
                     break
                 else:
@@ -150,22 +153,28 @@ if __name__ == "__main__":
             break
 
         if keyboard == ord('w'):
-            myDrone.move_forward(20)
+            # myDrone.move_forward(20)
+            myDrone.send_rc_control(0, -50, 0, 0)
 
         if keyboard == ord('s'):
-            myDrone.move_back(20)
+            # myDrone.move_back(20)
+            myDrone.send_rc_control(0, 50, 0, 0)
 
         if keyboard == ord('a'):
-            myDrone.move_left(20)
+            # myDrone.move_left(20)
+            myDrone.send_rc_control(-40, 0, 0, 0)
 
         if keyboard == ord('d'):
-            myDrone.move_right(20)
+            # myDrone.move_right(20)
+            myDrone.send_rc_control(40, 0, 0, 0)
 
         if keyboard == ord('g'):
-            myDrone.move_up(10)
+            # myDrone.move_up(10)
+            myDrone.send_rc_control(0, 0, -10, 0)
 
         if keyboard == ord('h'):
-            myDrone.move_down(10)
+            # myDrone.move_down(10)
+            myDrone.send_rc_control(0, 0, -10, 0)
 
         if keyboard == ord('v'):
             if recorder == 0:
